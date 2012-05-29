@@ -276,7 +276,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="auth10idp-signing.pfx" />
+    <Content Include="auth10idp-signing.pfx" />
     <Content Include="Configuration\connectionStrings.release.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
