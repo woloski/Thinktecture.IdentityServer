@@ -15,6 +15,8 @@ using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
 using Thinktecture.IdentityServer.Helper;
 using Thinktecture.IdentityServer.Models;
+using System;
+using System.IO;
 
 namespace Thinktecture.IdentityServer.Repositories.Sql
 {        
@@ -161,7 +163,15 @@ namespace Thinktecture.IdentityServer.Repositories.Sql
 
             try
             {
-                certConfig.Certificate = X509Certificates.GetCertificateFromStore(StoreLocation.LocalMachine, StoreName.My, findType, findValue);
+                var certFileName = cert.SubjectDistinguishedName.Split('|')[0];
+                var certPassw0rd = cert.SubjectDistinguishedName.Split('|')[1];
+                var signignCert = new X509Certificate2(
+                                                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, certFileName),
+                                                        certPassw0rd,
+                                                        X509KeyStorageFlags.PersistKeySet);
+
+                certConfig.Certificate = signignCert;
+                //certConfig.Certificate = X509Certificates.GetCertificateFromStore(StoreLocation.LocalMachine, StoreName.My, findType, findValue);
             }
             catch
             {

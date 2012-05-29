@@ -42,6 +42,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
                 return Cache.ReturnFromCache<ActionResult>(CacheRepository, Constants.CacheKeys.WSFedMetadata, 1, () =>
                     {
                         var endpoints = Endpoints.Create(
+                            HttpContext.Request.Url.Scheme,
                             HttpContext.Request.Headers["Host"],
                             HttpContext.Request.ApplicationPath,
                             ConfigurationRepository.Endpoints.HttpPort,

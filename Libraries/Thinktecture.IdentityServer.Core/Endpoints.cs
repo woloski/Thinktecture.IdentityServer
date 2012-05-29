@@ -52,9 +52,9 @@ namespace Thinktecture.IdentityServer
         /// Creates the URIs based on the host header
         /// </summary>
         /// <returns>STS Endpoints</returns>
-        public static Endpoints Create(string host, string applicationPath, int httpPort, int httpsPort)
+        public static Endpoints Create(string scheme, string host, string applicationPath, int httpPort, int httpsPort)
         {
-            return Create("https://" + host + applicationPath, httpPort, httpsPort);
+            return Create(scheme, scheme + "://" + host + applicationPath, httpPort, httpsPort);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Thinktecture.IdentityServer
         /// </summary>
         /// <param name="baseUri">The base URI.</param>
         /// <returns>STS Endpoints</returns>
-        public static Endpoints Create(string baseUriString, int httpPort, int httpsPort)
+        public static Endpoints Create(string scheme, string baseUriString, int httpPort, int httpsPort)
         {
             var ep = new Endpoints();
             if (baseUriString.EndsWith("/"))
@@ -73,56 +73,56 @@ namespace Thinktecture.IdentityServer
             // construct various http and https URIs
             var passive = new Uri(baseUriString + Paths.WSFedIssuePage);
             var builder = new UriBuilder(passive);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             ep.WSFederation = builder.Uri;
 
             // construct various http and https URIs
             var privacy = new Uri(baseUriString + Paths.PrivacyNotice);
             builder = new UriBuilder(privacy);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             ep.PrivacyNotice = builder.Uri;
 
             var simpleHttp = new Uri(baseUriString + Paths.SimpleHttp);
             builder = new UriBuilder(simpleHttp);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             ep.SimpleHttp = builder.Uri;
 
             var wrap = new Uri(baseUriString + Paths.Wrap);
             builder = new UriBuilder(wrap);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             ep.Wrap = builder.Uri;
 
             var oauth2 = new Uri(baseUriString + Paths.OAuth2);
             builder = new UriBuilder(oauth2);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             ep.OAuth2 = builder.Uri;
 
             var jsnotify = new Uri(baseUriString + Paths.JSNotify);
             builder = new UriBuilder(jsnotify);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             ep.JSNotify = builder.Uri;
 
             var wsfedmd = new Uri(baseUriString + Paths.WSFedMetadata);
             builder = new UriBuilder(wsfedmd);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             ep.WSFederationMetadata = builder.Uri;
 
             var activeClear = new Uri(baseUriString + Paths.WSTrustBase);
             builder = new UriBuilder(activeClear);
             builder.Scheme = Uri.UriSchemeHttp;
-            builder.Port = httpPort;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             activeClear = builder.Uri;
 
             builder = new UriBuilder(activeClear);
-            builder.Scheme = Uri.UriSchemeHttps;
-            builder.Port = httpsPort;
+            builder.Scheme = scheme;
+            builder.Port = scheme == Uri.UriSchemeHttps ? httpsPort : httpPort;
             var activeSsl = builder.Uri;
 
             ep.WSTrustMessageUserName = new Uri(activeClear + Paths.WSTrustMessageUserName);

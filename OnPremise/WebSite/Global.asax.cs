@@ -48,7 +48,7 @@ namespace Thinktecture.IdentityServer.Web
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new GlobalViewModelFilter());
-            filters.Add(new SslRedirectFilter());
+            //filters.Add(new SslRedirectFilter());
             filters.Add(new InitialConfigurationFilter());
         }
 

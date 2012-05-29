@@ -37,6 +37,7 @@ namespace Thinktecture.IdentityServer.Web.Controllers
         public ActionResult AppIntegration()
         {
             var endpoints = Endpoints.Create(
+                               HttpContext.Request.Url.Scheme,
                                HttpContext.Request.Headers["Host"],
                                HttpContext.Request.ApplicationPath,
                                ConfigurationRepository.Endpoints.HttpPort,
