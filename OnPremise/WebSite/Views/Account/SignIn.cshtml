@@ -182,7 +182,7 @@ border-image: initial;
 <h2>Contoso Login</h2>
 </div>
 @Html.ValidationSummary(true)
-<form id="form-logeo" class="generic" method="post">
+<form id="form-logeo" action="/Account/SignIn" class="generic" method="post">
 <div id="login-user" class="field">
 <label>Username</label>
 <input id="login-username" type="text" class="text" name="username" placeholder="enter your username" tabindex="1" maxlength="200">
