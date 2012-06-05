@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=320" />
 <title>Login Form</title>
 <style type="text/css">
 * {
@@ -182,7 +183,9 @@ border-image: initial;
 <h2>Contoso Login</h2>
 </div>
 @Html.ValidationSummary(true)
-<form id="form-logeo" action="/Account/SignIn" class="generic" method="post">
+
+@using (Html.BeginForm())
+{
 <div id="login-user" class="field">
 <label>Username</label>
 <input id="login-username" type="text" class="text" name="username" placeholder="enter your username" tabindex="1" maxlength="200">
@@ -197,6 +200,6 @@ border-image: initial;
 <div class="btnlogeo">
 <input id="login-submit" type="submit" value="Sign in">
 </div>
-</form>
+}
 </div>
 </body></html>
